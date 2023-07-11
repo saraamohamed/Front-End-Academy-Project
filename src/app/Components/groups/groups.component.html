@@ -1,0 +1,203 @@
+<!-- <div class="main-content" dir="rtl">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-light p-4">
+                        <h4 class="card-title text-right ">إنشاء مجموعه جديده و إدراج صلاحياتها</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="post"  (submit)="AddNewGroup($event)">
+
+                            <div class="form-group text-right">
+                                <label for="GroubName">إسم المجموعة</label><br>
+                                <input type="email" class="form-control " id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" placeholder="الإسم" form-control="name">
+                                <small id="emailHelp" class="form-text text-muted">
+                                    إدراج أسم للمجموعه
+                                </small>
+                            </div>
+
+                            <div class="text-right d-flex justify-content-start m-2">
+                                <div class="ms-1">
+                                    <input class="form-check-input" type="checkbox" value="all" id="defaultCheck" form-control="all">
+                                </div>
+                                <div>
+                                    <label class="form-check-label  text-primary" for="defaultCheck" form-control="defaultCheck">
+                                        إعطاء المجموعه جميع الصلاحيات
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="text-right d-flex justify-content-start m-2">
+                                <div class="ms-1">
+                                    <input class="form-check-input" type="checkbox" value="academyinnumber" id="defaultCheck1" form-control="academyinnumber">
+                                </div>
+                                <div>
+                                    <label class="form-check-label  text-primary" for="defaultCheck1" >
+                                        الأكاديمية فى أرقام
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="text-right d-flex justify-content-start m-2">
+                                <div class="ms-1">
+                                    <input class="form-check-input" type="checkbox" value="users" id="defaultCheck2" form-control="users">
+                                </div>
+                                <div>
+                                    <label class="form-check-label  text-primary" for="defaultCheck2">
+                                        المستخدمين
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div class="text-right d-flex justify-content-start m-2">
+                                <div class="ms-1">
+                                    <input class="form-check-input" type="checkbox" value="Groups" id="defaultCheck3" form-control="Groups">
+                                </div>
+                                <div>
+                                    <label class="form-check-label  text-primary" for="defaultCheck3">
+                                        المجموعات
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="text-right d-flex justify-content-start m-2">
+                                <div class="ms-1">
+                                    <input class="form-check-input" type="checkbox" value="branches" id="defaultCheck4" form-control="branches">
+                                </div>
+                                <div>
+                                    <label class="form-check-label  text-primary" for="defaultCheck4">
+                                        الفروع
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="text-right d-flex justify-content-start m-2">
+                                <div class="ms-1">
+                                    <input class="form-check-input" type="checkbox" value="Courses" id="defaultCheck5" form-control="Courses">
+                                </div>
+                                <div>
+                                    <label class="form-check-label  text-primary" for="defaultCheck5">
+                                        الكورسات
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="text-right d-flex justify-content-start m-2">
+                                <div class="ms-1">
+                                    <input class="form-check-input" type="checkbox" value="Subject" id="defaultCheck6" form-control="Subject">
+                                </div>
+                                <div>
+                                    <label class="form-check-label  text-primary" for="defaultCheck6">
+                                        المواد
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="text-right d-flex justify-content-start m-2">
+                                <div class="ms-1">
+                                    <input class="form-check-input" type="checkbox" value="Student" id="defaultCheck7" form-control="Student">
+                                </div>
+                                <div>
+                                    <label class="form-check-label  text-primary" for="defaultCheck7">
+                                        الطلاب
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary">إضافة إلى جدول المجموعات </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-light p-4">
+                    <h4 class="card-title text-right ">عرض المجموعات المنشأة وصلاحياتها </h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table text-center table-striped border border-1">
+                            <thead class=" text-primary">
+                                <th>
+                                    الأسم
+                                </th>
+                                <th>
+                                    الأكاديمية فى أرقام
+                                </th>
+                                <th>
+                                    المجموعات
+                                </th>
+                                <th>
+                                    المستخدمين
+                                </th>
+                                <th>
+                                    الفروع
+                                </th>
+                                <th>
+                                    الكورسات
+                                </th>
+                                <th>
+                                    المواد
+                                </th>
+                                <th colspan="3">
+                                    الطلاب
+                                </th>
+                                <th>
+                                    الرقم المميز
+                                </th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let ch of groups">
+                                    <td>
+                                        {{ch.groupName}}
+                                    </td>
+                                    <td>
+                                    
+
+                                        {{ch.academyInNumbersPage}}
+                                    </td>
+                                    <td>
+                                        {{ch.groupsPage}}
+                                    </td>
+                                    <td>
+                                        {{ch.usersPage}}
+                                    </td>
+
+                                    <td>
+                                        {{ch.branchesPage}}
+                                    </td>
+                                    <td>
+                                        {{ch.coursesPage}}
+                                    </td>
+                                    <td>
+                                        {{ch.subjectsPage}}
+                                    </td>
+                                    <td>
+                                        {{ch.traineeAdditionPage}}
+                                    </td>
+                                    <td>
+                                        {{ch.coursesToTraineeAdditionPage}}
+                                    </td>
+                                    <td>
+                                        {{ch.traineeCombinedAccountStatementPage}}
+                                    </td>
+                                    <td>
+                                        {{ch.groupId}}
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
