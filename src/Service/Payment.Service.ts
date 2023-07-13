@@ -8,14 +8,14 @@ export class PaymentService {
   baseUrl:string="https://localhost:7044/academy-api/transaction/"
 
   constructor(private http:HttpClient) { }
-  GetAllTransction(){
-    return this.http.get(`${this.baseUrl}all/`)
+  GetAllTransction(id:number){
+    return this.http.get(`${this.baseUrl}all/${id}`)
   }
-  GetTransctionByID(id:number){
+  GetCoursesAccountsStatements(id:number){
     return this.http.get(`${this.baseUrl}courses-accounts-statements/${id}`)
   }
   AddTransction(data:any){
-    return this.http.post(`${this.baseUrl}/insert`,data)
+    return this.http.post(`${this.baseUrl}insert`,data)
   }
 
   DeleteTransction(id:number){

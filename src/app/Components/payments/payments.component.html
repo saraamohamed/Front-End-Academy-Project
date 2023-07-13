@@ -24,66 +24,71 @@
                   </div>
                   <div class="mb-3">
                     <label for="studentNameSelected" class="form-label">اختر الاسم</label>
-                    <select id="studentNameSelected" class="form-select" formControlName="studentNameSelected">
-                      <option selected>ادخل اسم الطالب</option>
-                      <option>1</option>
+                    <select id="studentNameSelected"  (change)="getTraineeId()" class="form-select" formControlName="studentNameSelected">
+                        <option *ngFor="let traniee of traniees" [value]="traniee.traineeId" >{{traniee.arabicFullName}}</option>
                     </select>
                     <ng-container *ngIf="getstudentNameSelected.touched" >
                         <div *ngIf="getstudentNameSelected.hasError('required')" id="studentNameSelected" class="form-text text-danger  w-75">
                           من فضلك اختر اسم الطالب                                      </div>
                     </ng-container>
                   </div>
-                  <div class="mb-3">
-                    <label for="courseSelect" class="form-label"
-                      >اسم الكورس</label
-                    >
-                    <select id="courseSelect" class="form-select" formControlName="courseSelect">
-                      <option selected>اختر الكورس</option>
-                      <option>1</option>
-                    </select>
-                    <ng-container *ngIf="getcourseSelect.touched" >
-                        <div *ngIf="getcourseSelect.hasError('required')" id="courseSelect" class="form-text text-danger  w-75">
-                          من فضلك اختر اسم الكورس                                     </div>
-                    </ng-container>
-                  </div>
-                  <div class="mb-3">
-                    <label for="Remainingamount" class="form-label">
-                      المبلغ المستلم الان</label
-                    >
-                    <input
-                      type="input"
-                      class="form-control"
-                      id="Remainingamount"
-                      formControlName="Remainingamount"
-                      aria-describedby="Remainingamount"
-                    />
-                    <ng-container *ngIf="getRemainingamount.touched" >
-                        <div *ngIf="getRemainingamount.hasError('required')" id="Remainingamount" class="form-text text-danger  w-75">
-                          من فضلك ادخل الاسم المتبقى                                      </div>
-                          <div *ngIf="getRemainingamount.hasError('pattern')" id="Remainingamount" class="form-text text-danger  w-75">
-                            من فضلك ادخل المبلغ بالارقام                                     </div>
-                        </ng-container>
-                  </div>
-                  <div class="mb-3">
-                    <label for="The amount paid" class="form-label">
-                      المبلغ المستلم الان</label
-                    >
-                    <input
-                      type="input"
-                      class="form-control"
-                      id="Theamountpaid"
-                      formControlName="Theamountpaid"
-                      aria-describedby="Theamountpaid"
-                    />
-                    <ng-container *ngIf="getRemainingamount.touched" >
-                        <div *ngIf="getTheamountpaid.hasError('required')" id="Theamountpaid" class="form-text text-danger  w-75">
-                          من فضلك ادخل الاسم المدفوع                                     </div>
-                          <div *ngIf="getTheamountpaid.hasError('pattern')" id="Theamountpaid" class="form-text text-danger  w-75">
-                            من فضلك ادخل الاسم المبلغ بالارقام                                      </div>
-                        </ng-container>
-                  </div>
+
+               
+                    <div class="mb-3">
+                        <label for="courseSelect" class="form-label"
+                          >اسم الكورس</label
+                        >
+    
+                        <select id="courseSelect" (change)="getCourseId()" class="form-select" formControlName="courseSelect">
+                          <option *ngFor="let course of courses" [value]="course.courseId">{{course.courseName}}</option>
+                        </select>
+                        <ng-container *ngIf="getcourseSelect.touched" >
+                            <div *ngIf="getcourseSelect.hasError('required')" id="courseSelect" class="form-text text-danger  w-75">
+                              من فضلك اختر اسم الكورس                                     </div>
+                        </ng-container>      
+                      
+                      </div>
+                      <ng-container *ngFor="let course of courses">
+                      <div class="mb-3">
+                        <label for="Remainingamount" class="form-label">
+                          المبلغ المستلم الان </label
+                        >
+                        <input
+                          type="input"
+                          class="form-control"
+                          id="Remainingamount"
+                          formControlName="Remainingamount"
+                          aria-describedby="Remainingamount"
+                        />
+                        <ng-container *ngIf="getRemainingamount.touched" >
+                            <div *ngIf="getRemainingamount.hasError('required')" id="Remainingamount" class="form-text text-danger  w-75">
+                              من فضلك ادخل المبلغ المستلم                                      </div>
+                              <div *ngIf="getRemainingamount.hasError('pattern')" id="Remainingamount" class="form-text text-danger  w-75">
+                                من فضلك ادخل المبلغ بالارقام                                     </div>
+                            </ng-container>
+                      </div>
+                      <div class="mb-3">
+                        <label for="The amount paid" class="form-label">
+                          المبلغ المتبقى </label
+                        >
+                        <input
+                          type="input"
+                          class="form-control"
+                          id="Theamountpaid"
+                          formControlName="Theamountpaid"
+                          aria-describedby="Theamountpaid"
+                        />
+                        <ng-container *ngIf="getRemainingamount.touched" >
+                            <div *ngIf="getTheamountpaid.hasError('required')" id="Theamountpaid" class="form-text text-danger  w-75">
+                              من فضلك ادخل المبلغ المتبقى                                     </div>
+                              <div *ngIf="getTheamountpaid.hasError('pattern')" id="Theamountpaid" class="form-text text-danger  w-75">
+                                من فضلك ادخل الاسم المبلغ بالارقام                                      </div>
+                            </ng-container>
+                      </div>
+                  </ng-container>
+
                   <button class="btn btn-primary ms-2">تراجع</button>
-                  <button  [disabled]="!trainsacteForm.valid" class="btn btn-primary ms-2">اضافة</button>
+                  <button  [disabled]="!trainsacteForm.valid" class="btn btn-primary ms-2" (click)="addTrainsaction()">اضافة</button>
                 </form>
   
                 <!-- table -->

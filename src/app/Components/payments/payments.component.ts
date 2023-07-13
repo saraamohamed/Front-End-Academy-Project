@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { PaymentService } from 'src/Service/Payment.Service';
 import { Validators,FormControl,FormGroup } from '@angular/forms';
 import { BranchService } from 'src/Service/branch.service';
+import { CourseService } from 'src/Service/Course.Servise';
+import { tranieeServices } from 'src/Service/traniee.services';
 @Component({
   selector: 'app-payments',
   templateUrl: './payments.component.html',
@@ -9,8 +11,13 @@ import { BranchService } from 'src/Service/branch.service';
 })
 export class PaymentsComponent {
   branchs:any []=[]
-  Allcourses:any
+  courses:any
+  traniees:any
+  traineeId:any
+  tarineeTrainsactionData:any
   isEdit:boolean=false;
+  courseName:any
+
   selectedCourseID!:number;
   selectedSubjectID!:Number;
   courceId:any
@@ -21,6 +28,8 @@ export class PaymentsComponent {
   constructor(
     private paymentService:PaymentService,
     private branchService:BranchService,
+    private tranieeServices:tranieeServices,
+    private coursesService:CourseService,
     ){}
 
     trainsacteForm =new FormGroup({
@@ -40,7 +49,8 @@ export class PaymentsComponent {
   };
   get getcourseSelect(){
     return this.trainsacteForm.controls['courseSelect']
-  };  get getRemainingamount(){
+  };  
+  get getRemainingamount(){
     return this.trainsacteForm.controls['Remainingamount']
   };  get getTheamountpaid(){
     return this.trainsacteForm.controls['Theamountpaid']
@@ -52,88 +62,103 @@ export class PaymentsComponent {
   
 
 
-loadBranchs() {
-
- this.branchService.GetAllBranch().subscribe({
-   next: (response: any) => {
-     this.branchs = response; 
-     console.log(response);     
-   },
-   error: (error) => {
-     console.log(error);
-   }
- });
-}
 
    ngOnInit(): void {
 
-    this.loadBranchs()
+  
 
-   }
-  }
-// // this.loadSubjects()
-// console.log("on it fn");
+      this.branchService.GetAllBranch().subscribe({
+        next: (response: any) => {
+          this.branchs = response; 
+          console.log(response);     
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      });
 
-
-// }
-
-
-
-
-
-// DeleteSubject(id:number){
-//     this.paymentService.deleteSubject(id).subscribe(()=>{
-//       console.log("deleted")
-//       this.loadSubjects();
-//   })
-//   }
-//   EditSubject(id:number){
-//     this.paymentService.getSubjectById(id).subscribe((result:any)=>{
-//       console.log(result)
-//       this.isEdit=true;
-//       console.log(this.isEdit);
-      
-//       const subject=result
-//       this.trainsacteForm.patchValue({
-//         subjectName:subject.subjectName,
-//         subjectCourse:subject.courseId,
-       
-//       })
-//     })
-//   }
-//   saveUpdate(){
-//     const subject={
-//       subjectId:this.courseId,
-//       subjectName:this.trainsacteForm.value.subjectName,
-//       courseId:this.trainsacteForm.value.subjectCourse,
-//     }
-//     console.log(subject);
+     this.tranieeServices.GetTranieeAll().subscribe({
+       next:(response :any)=>{
+         this.traniees=response
+         console.log(response);     
+       },
+       error:()=>{},
+     })
+     this.coursesService.getAllCourses().subscribe({
+      next:(response :any)=>{
+        this.courses=response
+        console.log(response);     
+      },
+      error:()=>{},
+    })
+     
     
-//     this.paymentService.editSubject(subject).subscribe(()=>{
-//       console.log("edited")
-//       this.loadSubjects();
-//       this.isEdit=false;
-//       this.courceId=0;
-//       this.trainsacteForm.reset();
-//       this.ngOnInit();
+    
+      
+      }
+ 
 
-//   })
-//   }
-//   AddSubject(){
-//     const subject={
-//       subjectName:this.trainsacteForm.value.subjectName,
-//       courseId:this.trainsacteForm.value.subjectCourse,
-//     }
-//     console.log(subject)
-//     this.paymentService.addSubject(subject).subscribe(()=>{
-//       console.log("added");
-//       this.loadSubjects();
-//       this.trainsacteForm.reset();
+      getTraineeId(){
+        this.traineeId=this.trainsacteForm.value.studentNameSelected
+        console.log(this.traineeId);
+      //   this.paymentService.GetCoursesAccountsStatements(this.traineeId).subscribe({
+      //    next: (response: any) => {
+      //      this.courses = response; 
+      //      console.log(response);     
+      //    },
+      //    error: (error) => {
+      //      console.log(error);
+      //    }
+      //  });
+    
+       this.paymentService.GetAllTransction(this.traineeId).subscribe({
+        next: (response: any) => {
+          this.tarineeTrainsactionData = response; 
+          console.log( this.tarineeTrainsactionData);     
+        },
+        error: (error) => {
+          console.log(error);
+        }
+       })
+  
+       
 
-//     })
-//   }
-//   back(){
-//     this.trainsacteForm.reset();
-//   }
 
- //  }
+    
+  }
+  getCourseId(){
+    this.courceId=this.trainsacteForm.value.courseSelect;
+    console.log(this.courceId);
+    
+    this.coursesService.getcoursesById(this.courceId).subscribe((response:any)=>{
+      this.courseName=response[0].courseName;
+      console.log(response);
+      
+    })
+   }
+
+  addTrainsaction(){
+    const today = new Date();
+    const day = today.getDate();
+const month = today.getMonth() + 1; 
+const year = today.getFullYear();
+    
+        const trainsaction={
+      courseName:this.courseName,
+      transactionDateTime:day+month+year,
+      receivedMoneyAmount:this.trainsacteForm.value.Theamountpaid,
+      dashboardUser:"sara",
+      notes:"لا يوجد",
+      traineeId:this.traineeId,
+      courseId: this.courceId,
+    }
+    console.log(trainsaction);
+    this.paymentService.AddTransction(trainsaction).subscribe(()=>{
+      console.log("added");
+      // this.loadSubjects();
+      this.trainsacteForm.reset();
+
+    })
+  
+  }  
+}
